@@ -1,0 +1,3 @@
+/LeNet/data/
+__pycache__/
+/LeNet/best_model.pth
