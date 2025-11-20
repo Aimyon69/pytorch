@@ -12,11 +12,12 @@ import pandas
 def train_val_data_process():
     train_data=FashionMNIST(root='./data',train=True,transform=transforms.Compose([transforms.Resize(28),transforms.ToTensor()]),download=True)
     train_data,val_data=Data.random_split(train_data,[round(0.8*len(train_data)),round(0.2*len(train_data))])
-    train_dataloader=Data.DataLoader(dataset=train_data,batch_size=128,shuffle=True,num_workers=8)
-    val_dataloader=Data.DataLoader(dataset=val_data,batch_size=128,shuffle=True,num_workers=8)
+    train_dataloader=Data.DataLoader(dataset=train_data,batch_size=32,shuffle=True,num_workers=0)
+    val_dataloader=Data.DataLoader(dataset=val_data,batch_size=32,shuffle=True,num_workers=0)
     return train_dataloader,val_dataloader
 def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
-    device=torch.device('cuda')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    print(f"使用设备: {torch.cuda.get_device_name(0)}")
     optimizer=torch.optim.Adam(model.parameters(),lr=0.001)
     criterion=nn.CrossEntropyLoss()
     model=model.to(device)
@@ -37,8 +38,8 @@ def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
         train_num=0
         val_num=0
         for step,(b_x,b_y) in enumerate(train_dataloader):
-            b_x=b_x.to(device)
-            b_y=b_y.to(device)
+            b_x=b_x.to(device,non_blocking=True)
+            b_y=b_y.to(device,non_blocking=True)
             model.train()
             output=model(b_x)
             pre_lab=torch.argmax(output,dim=1)
@@ -50,8 +51,8 @@ def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
             train_corrects+=torch.sum(pre_lab==b_y.data)
             train_num+=b_x.size(0)
         for step,(b_x,b_y) in enumerate(val_dataloader):
-             b_x=b_x.to(device)
-             b_y=b_y.to(device)
+             b_x=b_x.to(device,non_blocking=True)
+             b_y=b_y.to(device,non_blocking=True)
              model.eval()
              output=model(b_x)
              pre_lab=torch.argmax(output,dim=1)
@@ -70,7 +71,8 @@ def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
             best_model_wts=copy.deepcopy(model.state_dict())
         time_use=time.time()-since
         print(f'consuming time:{time_use}')
-        torch.save(model.load_state_dict(best_model_wts),'best_model.pth')
+    model.load_state_dict(best_model_wts)
+    torch.save(model,'best_model.pth')
     train_process=pandas.DataFrame(data={'epoch':range(num_epochs),
                                              'train_loss_all':train_loss_all,
                                              'val_loss_all':val_loss_all,
