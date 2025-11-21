@@ -12,13 +12,13 @@ import pandas
 def train_val_data_process():
     train_data=FashionMNIST(root='./data',train=True,transform=transforms.Compose([transforms.Resize(28),transforms.ToTensor()]),download=True)
     train_data,val_data=Data.random_split(train_data,[round(0.8*len(train_data)),round(0.2*len(train_data))])
-    train_dataloader=Data.DataLoader(dataset=train_data,batch_size=32,shuffle=True,num_workers=0)
-    val_dataloader=Data.DataLoader(dataset=val_data,batch_size=32,shuffle=True,num_workers=0)
+    train_dataloader=Data.DataLoader(dataset=train_data,batch_size=128,shuffle=True,num_workers=0)
+    val_dataloader=Data.DataLoader(dataset=val_data,batch_size=128,shuffle=True,num_workers=0)
     return train_dataloader,val_dataloader
 def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(f"使用设备: {torch.cuda.get_device_name(0)}")
-    optimizer=torch.optim.Adam(model.parameters(),lr=0.001)
+    optimizer=torch.optim.Adam(model.parameters(),lr=0.002)
     criterion=nn.CrossEntropyLoss()
     model=model.to(device)
     best_model_wts=copy.deepcopy(model.state_dict())
@@ -79,10 +79,32 @@ def train_model_process(model,train_dataloader,val_dataloader,num_epochs):
                                              'train_acc_all':train_acc_all,
                                              'val_acc_all':val_acc_all})
     return train_process
+def matplot_acc_loss(train_process):
+    plt.figure(figsize=(12,4))
+    plt.subplot(121)
+    plt.plot(train_process['epoch'],train_process.train_loss_all,'ro-',label='train loss')
+    plt.plot(train_process['epoch'],train_process.val_loss_all,'bo-',label='val loss')
+    plt.legend()
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.subplot(122)
+    plt.plot(train_process['epoch'],train_process.train_acc_all,'ro-',label='train acc')
+    plt.plot(train_process['epoch'],train_process.val_acc_all,'bo-',label='val acc')
+    plt.legend()
+    plt.xlabel('epoch')
+    plt.ylabel('acc')
+    plt.show()
 if __name__=='__main__':
     LeNet=LeNet()
     train_dataloader,val_dataloader=train_val_data_process()
     train_process=train_model_process(LeNet,train_dataloader,val_dataloader,20)
+    matplot_acc_loss(train_process)
+    while True:
+        user_input=input()
+        if user_input.strip().lower()=='q':
+            break
+
+
     
 
 
