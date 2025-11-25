@@ -11,36 +11,38 @@ anno_file='D:/Code/pytorch/Design/celebA/list_bbox_celeba.txt'
 landmark_file='D:/Code/pytorch/Design/celebA/list_landmarks_celeba.txt'
 im_dir='D:/Code/pytorch/Design/celebA/img_celeba'
 save_dir='./data'
+#分别读取人脸框标注数据和特征点标注数据
 os.makedirs(save_dir, exist_ok=True)
 with open(anno_file, 'r') as f:
     annotations = f.readlines()
 with open(landmark_file, 'r') as f2:
     landmark_positions_list = f2.readlines()
-pos_cls_list = []    
-pos_roi_list = []    
-neg_cls_list = []    
-part_roi_list = []   
-pts_list = []        
-p_idx = 0  
-n_idx = 0 
-d_idx = 0  
-pts_idx = 0  
+pos_cls_list=[]#    
+pos_roi_list=[]#   
+neg_cls_list=[]#    
+part_roi_list=[]#   
+pts_list=[]#        
+p_idx=0#  
+n_idx=0# 
+d_idx=0#  
+pts_idx=0#  
 for id_annos in range(2, 10000):
-    anno = annotations[id_annos].strip().split()
-    im_path = anno[0]
+    #从2开始是为了跳过第0行(样本数量)，第1行(各项名称)
+    anno = annotations[id_annos].strip().split()#去除前后空格和根据空格分割元素存储到列表中
+    im_path = anno[0]#第一个元素是图片文件名
     x1, y1, w, h = map(float, anno[1:])
     x2 = x1 + w - 1  
     y2 = y1 + h - 1
     box = np.array([x1, y1, x2, y2], dtype=np.float32)
     landmark_anno = landmark_positions_list[id_annos].strip().split()
-    pts_raw = list(map(float, landmark_anno[1:]))
-    img_path = os.path.join(im_dir, f"{os.path.splitext(im_path)[0]}.jpg")
+    pts_raw = list(map(float, landmark_anno[1:]))#读取五个特征点数据，每个数据有x，y两个属性，list共10个元素
+    img_path = os.path.join(im_dir, f"{os.path.splitext(im_path)[0]}.jpg")#splitext(im_path)[0]指的是类似image.png中的image文件名，[1]是拓展名.png
     img = cv2.imread(img_path)
     if img is None:
         continue  
-    height, width, _ = img.shape
+    height, width, _ = img.shape#_表示忽略
     if max(w, h) < 40 or x1 < 0 or y1 < 0:
-        continue
+        continue#忽略较小的图像
     for _ in range(20):  
         size = int(min(w, h))  
         nx1 = max(int(x1), 0)  
