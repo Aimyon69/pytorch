@@ -3,3 +3,5 @@ __pycache__/
 /LeNet/best_model.pth
 /AlexNet/best_model.pth
 /VGG/best_model.pth
+/Design/celebA
+/Design/mtcnn/data_process/data
