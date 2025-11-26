@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./mtcnn/data_process"
+    ]
+}

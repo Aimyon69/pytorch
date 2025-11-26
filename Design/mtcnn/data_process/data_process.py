@@ -6,7 +6,7 @@ import torch
 import random
 from torch.utils.data import Dataset
 import pickle
-image_size=48
+image_size=12
 anno_file='D:/Code/pytorch/Design/celebA/list_bbox_celeba.txt'
 landmark_file='D:/Code/pytorch/Design/celebA/list_landmarks_celeba.txt'
 im_dir='D:/Code/pytorch/Design/celebA/img_celeba'
@@ -43,10 +43,14 @@ for id_annos in range(2, 10000):
     height, width, _ = img.shape#_表示忽略
     if max(w, h) < 40 or x1 < 0 or y1 < 0:
         continue#忽略较小的图像
-    for _ in range(20):  
-        size = int(min(w, h))  
-        nx1 = max(int(x1), 0)  
-        ny1 = max(int(y1), 0)  
+    for _ in range(20):
+        size = int(np.random.randint(int(min(w, h) * 0.8), np.ceil(1.25 * min(w, h))))
+        cx = x1 + w / 2
+        cy = y1 + h / 2
+        delta_x = np.random.randint(-0.2 * w, 0.2 * w)
+        delta_y = np.random.randint(-0.2 * h, 0.2 * h)
+        nx1 = int(max(cx + delta_x - size / 2, 0))
+        ny1 = int(max(cy + delta_y - size / 2, 0))
         nx2 = nx1 + size
         ny2 = ny1 + size
         if nx2 > width or ny2 > height:
@@ -78,8 +82,10 @@ for id_annos in range(2, 10000):
                 max(px_list) < nx2 and max(py_list) < ny2):
                 pts_x = [(px - nx1) / size for px in px_list]
                 pts_y = [(py - ny1) / size for py in py_list]
-                pts = pts_x + pts_y 
-
+                pts = []
+                for i in range(5):
+                    pts.append(pts_x[i])
+                    pts.append(pts_y[i]) 
                 pts_list.append({
                     "image": im_tensor,
                     "label": torch.tensor(1, dtype=torch.long),
@@ -104,6 +110,7 @@ for id_annos in range(2, 10000):
             size = random.randint(40, min(width, height) // 2)
         else:
             size = random.randint(min(width, height) // 2, 40)
+        size = min(size, width, height)
         nx = random.randint(0, width - size)
         ny = random.randint(0, height - size)
         crop_box = np.array([nx, ny, nx + size, ny + size], dtype=np.float32)
