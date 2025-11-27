@@ -42,10 +42,10 @@ class MTCNNLoss(nn.Module):
         self.loss_box=nn.MSELoss(reduction='none')
         self.loss_landmark=nn.MSELoss(reduction='none')
     def forward(self,pred_cls,pred_box,pred_landmark,gt_label,gt_box,gt_landmark):
-        pred_cls=pred_cls.squeeze(3).squeeze(2)
-        pred_box=pred_box.squeeze(3).squeeze(2)
-        pred_landmark=pred_landmark.squeeze(3).squeeze(2)
-
+        if pred_cls.dim() == 4:
+            pred_cls=pred_cls.squeeze(3).squeeze(2)
+            pred_box=pred_box.squeeze(3).squeeze(2)
+            pred_landmark=pred_landmark.squeeze(3).squeeze(2)
         mask_cls=torch.ge(gt_label,0)
         valid_cls_label=gt_label[mask_cls]
         valid_cls_pred=pred_cls[mask_cls]
@@ -79,6 +79,38 @@ class MTCNNLoss(nn.Module):
             loss_l=torch.tensor(0.0).to(gt_landmark.device)
         total_loss=loss_c*1.0+loss_b*0.5+loss_l*0.5
         return total_loss,loss_c,loss_b,loss_l
-
+class RNet(nn.Module):
+    def __init__(self):
+        super(RNet,self).__init__()
+        self.flatten=nn.Flatten()
+        self.backbone=nn.Sequential(nn.Conv2d(in_channels=3,out_channels=28,kernel_size=3),
+                                    nn.PReLU(),
+                                    nn.MaxPool2d(kernel_size=3,stride=2,ceil_mode=True),
+                                    nn.Conv2d(in_channels=28,out_channels=48,kernel_size=3),
+                                    nn.PReLU(),
+                                    nn.MaxPool2d(kernel_size=3,stride=2,ceil_mode=True),
+                                    nn.Conv2d(in_channels=48,out_channels=64,kernel_size=2),
+                                    nn.PReLU())
+        self.fc=nn.Sequential(nn.Linear(64*3*3,128),
+                              nn.PReLU())
+        self.cls_layer=nn.Linear(128,2)
+        self.bbox_layer=nn.Linear(128,4)
+        self.landmark_layer=nn.Linear(128,10)
+    def forward(self,x):
+        x=self.backbone(x)
+        x=self.flatten(x)
+        x=self.fc(x)
+        cls_out=self.cls_layer(x)
+        bbox_out=self.bbox_layer(x)
+        lm_out=self.landmark_layer(x)
+        return cls_out,bbox_out,lm_out
+def get_rnet_dataloader(batchsize=384):
+    cls_data=MTCNNDataset('D:/Code/pytorch/Design/mtcnn/data_process/data/rnet_cls.pkl')
+    part_data=MTCNNDataset('D:/Code/pytorch/Design/mtcnn/data_process/data/rnet_roi.pkl')
+    neg_data=MTCNNDataset('D:/Code/pytorch/Design/mtcnn/data_process/data/rnet_neg.pkl')
+    full_dataset=Data.ConcatDataset([cls_data,part_data,neg_data])
+    loader=Data.DataLoader(dataset=full_dataset,batch_size=batchsize,shuffle=True,num_workers=0)
+    return loader
+        
 
 
