@@ -5,5 +5,5 @@ __pycache__/
 /VGG/best_model.pth
 /Design/celebA
 /Design/mtcnn/data_process/data
-
+/Design/ResNet/datasets
 

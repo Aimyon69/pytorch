@@ -42,4 +42,20 @@ def convert_to_square(bboxes):
     square_bboxes[:,3]=square_bboxes[:,1]+max_side
     square_bboxes[:,4]=bboxes[:,4]
     return square_bboxes
+def NMS_Indices(boxes, threshold=0.3, isMin=False):
+    if boxes.shape[0]==0:
+        return np.array([])
+    sort_index = (-boxes[:, 4]).argsort()
+    keep_indices = []
+    while sort_index.shape[0] > 0:
+        idx_self = sort_index[0]
+        keep_indices.append(idx_self)
+        if sort_index.shape[0] == 1:
+            break
+        a_box = boxes[idx_self]
+        idx_others = sort_index[1:]
+        b_boxes = boxes[idx_others]
+        idx = np.where(IoU(a_box, b_boxes, isMin) < threshold)
+        sort_index = idx_others[idx]
+    return np.array(keep_indices)
 
