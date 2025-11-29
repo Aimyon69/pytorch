@@ -35,7 +35,7 @@ def video():
         cap.release()
     if index==None:
         exit()
-    cap=cv2.VideoCapture(index)
+    cap=cv2.VideoCapture("C:/Users/Aimyon/Desktop/1.mp4")
     while(cap.isOpened()):
         ret,frame=cap.read()
         if ret==True:
@@ -108,4 +108,5 @@ def picture(img_path):
     cv2.destroyAllWindows()
 
 if __name__=='__main__':
-    picture('D:/image/disgust.jpg')
+    picture('D:/image/2.jpeg')
+    #video()

@@ -69,6 +69,7 @@ class MTCNNDetector:
             return np.array([])
         boxes=np.vstack(boxes)
         keep=NMS(boxes,0.5)
+        print(len(keep))
         return keep
     def rnet_detect(self,img,boxes):
         if boxes.shape[0]==0:
@@ -100,7 +101,7 @@ class MTCNNDetector:
             cls_out=torch.softmax(cls_out,dim=1)
         cls_scores=cls_out[:,1].cpu().numpy()
         box_offsets=box_out.cpu().numpy()
-        keep_idxs=np.where(cls_scores>0.7)[0]
+        keep_idxs=np.where(cls_scores>0.6)[0]
         if len(keep_idxs)==0:
             return np.array([])
         valid_box=np.array(valid_box)
@@ -116,6 +117,7 @@ class MTCNNDetector:
         align_boxes[:,3]=keep_boxes[:,3]+keep_offsets[:,3]*bh
         align_boxes[:,4]=keep_scores
         keep=NMS(align_boxes,0.5)
+        print(len(keep))
         return keep
     def onet_detect(self,img,boxes):
         if boxes.shape[0]==0:
