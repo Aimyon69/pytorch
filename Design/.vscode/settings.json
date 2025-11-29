@@ -1,5 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "./mtcnn/data_process","./mtcnn/training"
+        "./mtcnn/data_process","./mtcnn/training","./mtcnn","./ResNet"
     ]
 }

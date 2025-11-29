@@ -148,7 +148,7 @@ class MTCNNDetector:
         cls_scores=cls_out[:,1].cpu().numpy()
         box_offsets=box_out.cpu().numpy()
         lm_offsets=lm_out.cpu().numpy()
-        keep_idxs=np.where(cls_scores>0.7)[0]
+        keep_idxs=np.where(cls_scores>0.6)[0]
         if len(keep_idxs)==0:
             return np.array([]),np.array([])
         valid_box=np.array(valid_box)
