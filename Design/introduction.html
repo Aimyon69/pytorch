@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>introduction.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E5%9F%BA%E4%BA%8E-mtcnn-%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8Bresnet-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E4%B8%8E-opencv%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E7%9A%84%E4%BA%BA%E8%84%B8%E6%83%85%E7%BB%AA%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F">基于 MTCNN (人脸检测)、ResNet (卷积神经网络) 与 OpenCV(图像处理)的人脸情绪识别系统</h1>
+<blockquote>
+<p><strong>项目源码</strong>：欢迎访问我的 GitHub 仓库 <a href="https://github.com/Aimyon69/pytorch/tree/master/Design">Aimyon69-Design</a> 获取完整代码。</p>
+</blockquote>
+<hr>
+<h2 id="%E4%B8%80mtcnn-%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B%E6%A8%A1%E5%9D%97">一、MTCNN 人脸检测模块</h2>
+<p>实现人脸情绪识别的第一步，是从复杂的视频流或图像背景中精准提取人脸信息。本项目选用 <strong>MTCNN (Multi-task Cascaded Convolutional Networks)</strong> 算法，实现了高效的人脸检测、边界框回归及关键点定位。</p>
+<h3 id="1-%E6%95%B0%E6%8D%AE%E9%9B%86%E9%80%89%E5%8F%96">1. 数据集选取</h3>
+<ul>
+<li><strong>人脸检测 (MTCNN)</strong>：采用香港中文大学的 <strong><a href="https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html">CelebA 数据集</a></strong>。该数据集拥有丰富的人脸边框和特征点标注，非常适合训练 MTCNN 的 P/R/O 网络。</li>
+<li><strong>情绪识别 (ResNet)</strong>：采用 Kaggle 开源的 <strong><a href="https://www.kaggle.com/datasets/msambare/fer2013">FER-2013 数据集</a></strong>。它包含七种主要情绪的分类数据，完全满足本项目需求。</li>
+</ul>
+<h3 id="2-mtcnn-%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8E%9F%E7%90%86">2. MTCNN 的基本结构与原理</h3>
+<p>MTCNN 由三个级联的卷积神经网络组成：<strong>PNet</strong>、<strong>RNet</strong> 和 <strong>ONet</strong>。</p>
+<h4 id="21-pnet-proposal-network">2.1 PNet (Proposal Network)</h4>
+<p>PNet 是一个全卷积网络，主要负责快速生成候选框。</p>
+<ul>
+<li><strong>图像金字塔</strong>：由于 PNet 的感受野仅为 12x12，无法直接识别大尺寸人脸。我们引入图像金字塔，将原图按比例多次缩放，使不同尺寸的人脸都能落入 PNet 的检测范围。</li>
+<li><strong>NMS (非极大值抑制)</strong>：针对同一人脸可能产生多个重叠框的问题，利用 NMS 算法去除冗余框，保留置信度最高的一个。</li>
+</ul>
+<p><strong>PNet 精度较低的原因分析：</strong></p>
+<ol>
+<li><strong>网络结构简单</strong>：全卷积结构，层数少，特征提取能力有限。</li>
+<li><strong>感受野受限</strong>：12x12 的窗口难以捕获全局人脸特征。</li>
+<li><strong>信息丢失</strong>：图像金字塔的缩放过程会导致部分细节特征模糊。</li>
+</ol>
+<h5 id="pnet-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84-pytorch%E5%AE%9E%E7%8E%B0">PNet 网络结构 (PyTorch实现)</h5>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PNet</span><span class="hljs-params">(nn.Module)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        super(PNet, self).__init__()
+        <span class="hljs-comment"># 特征提取层</span>
+        self.f1 = nn.Sequential(
+            nn.Conv2d(<span class="hljs-number">3</span>, <span class="hljs-number">10</span>, kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">1</span>),
+            nn.PReLU(),
+            nn.MaxPool2d(kernel_size=<span class="hljs-number">2</span>, stride=<span class="hljs-number">2</span>, ceil_mode=<span class="hljs-literal">True</span>),
+            nn.Conv2d(<span class="hljs-number">10</span>, <span class="hljs-number">16</span>, kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">1</span>),
+            nn.PReLU(),
+            nn.Conv2d(<span class="hljs-number">16</span>, <span class="hljs-number">32</span>, kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">1</span>),
+            nn.PReLU()
+        )
+        <span class="hljs-comment"># 多任务输出层</span>
+        self.classifier = nn.Conv2d(<span class="hljs-number">32</span>, <span class="hljs-number">2</span>, kernel_size=<span class="hljs-number">1</span>, stride=<span class="hljs-number">1</span>)    <span class="hljs-comment"># 人脸分类</span>
+        self.bbox_reg = nn.Conv2d(<span class="hljs-number">32</span>, <span class="hljs-number">4</span>, kernel_size=<span class="hljs-number">1</span>, stride=<span class="hljs-number">1</span>)      <span class="hljs-comment"># 边框回归</span>
+        self.landmark_reg = nn.Conv2d(<span class="hljs-number">32</span>, <span class="hljs-number">10</span>, kernel_size=<span class="hljs-number">1</span>, stride=<span class="hljs-number">1</span>) <span class="hljs-comment"># 关键点回归</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
+        x = self.f1(x)
+        <span class="hljs-keyword">return</span> self.classifier(x), self.bbox_reg(x), self.landmark_reg(x)
+</div></code></pre>
+<h5 id="%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86">训练数据预处理</h5>
+<p>MTCNN 是多任务学习，CelebA 的原始标注均为正样本，无法直接训练分类任务。我们需要对原始图像进行随机裁剪，生成三类样本：</p>
+<ul>
+<li><strong>正样本 (Positive)</strong>：IoU ≥ 0.65，用于分类、边框回归、关键点回归。</li>
+<li><strong>部分样本 (Part)</strong>：0.4 ≤ IoU &lt; 0.65，仅用于边框回归。</li>
+<li><strong>负样本 (Negative)</strong>：IoU &lt; 0.3，仅用于分类。</li>
+</ul>
+<h5 id="%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89">损失函数定义</h5>
+<p>针对多任务学习，我们自定义了损失函数，对分类、回归和关键点损失进行加权求和。<strong>注意：</strong> 利用掩码 (Mask) 机制，确保不同类型的样本只计算其对应的损失（例如负样本不计算回归损失）。</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MTCNNLoss</span><span class="hljs-params">(nn.Module)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        super().__init__()
+        self.loss_cls = nn.CrossEntropyLoss(reduction=<span class="hljs-string">'none'</span>)
+        self.loss_box = nn.MSELoss(reduction=<span class="hljs-string">'none'</span>)
+        self.loss_landmark = nn.MSELoss(reduction=<span class="hljs-string">'none'</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, pred_cls, pred_box, pred_landmark, gt_label, gt_box, gt_landmark)</span>:</span>
+        <span class="hljs-comment"># ... (维度调整代码省略) ...</span>
+        
+        <span class="hljs-comment"># 1. 分类损失 (仅针对正、负样本)</span>
+        mask_cls = torch.ge(gt_label, <span class="hljs-number">0</span>)
+        valid_cls_label = gt_label[mask_cls]
+        valid_cls_pred = pred_cls[mask_cls]
+        loss_c = torch.mean(self.loss_cls(valid_cls_pred, valid_cls_label)) <span class="hljs-keyword">if</span> valid_cls_label.shape[<span class="hljs-number">0</span>] &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> torch.tensor(<span class="hljs-number">0.0</span>).to(gt_label.device)
+
+        <span class="hljs-comment"># 2. 边框回归损失 (仅针对正、部分样本)</span>
+        mask_box = torch.ne(gt_label, <span class="hljs-number">0</span>)
+        valid_box_gt = gt_box[mask_box]
+        valid_box_pred = pred_box[mask_box]
+        loss_b = torch.mean(self.loss_box(valid_box_pred, valid_box_gt)) <span class="hljs-keyword">if</span> valid_box_gt.shape[<span class="hljs-number">0</span>] &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> torch.tensor(<span class="hljs-number">0.0</span>).to(gt_box.device)
+
+        <span class="hljs-comment"># 3. 关键点损失 (仅针对含关键点的样本)</span>
+        mask_lm = torch.sum(torch.abs(gt_landmark), dim=<span class="hljs-number">1</span>) &gt; <span class="hljs-number">0</span>
+        loss_l = torch.mean(self.loss_landmark(pred_landmark[mask_lm], gt_landmark[mask_lm])) <span class="hljs-keyword">if</span> mask_lm.sum() &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> torch.tensor(<span class="hljs-number">0.0</span>).to(gt_landmark.device)
+
+        <span class="hljs-comment"># 加权求和</span>
+        <span class="hljs-keyword">return</span> loss_c * <span class="hljs-number">1.0</span> + loss_b * <span class="hljs-number">0.5</span> + loss_l * <span class="hljs-number">0.5</span>, loss_c, loss_b, loss_l
+</div></code></pre>
+<h4 id="22-rnet-refine-network">2.2 RNet (Refine Network)</h4>
+<p>RNet 的训练数据源于 <strong>困难样本挖掘 (Hard Example Mining)</strong>：即利用训练好的 PNet 对数据进行检测，收集 PNet 识别错误的样本（False Positives）作为 RNet 的负样本。这使得 RNet 能够专门学习区分那些容易被混淆的“假人脸”。</p>
+<p><strong>网络特点</strong>：相比 PNet 增加了一层全连接层，特征拟合能力更强，能有效滤除 PNet 的误检框，并微调边框位置。</p>
+<h4 id="23-onet-output-network">2.3 ONet (Output Network)</h4>
+<p>ONet 是级联结构的最后一层，也是结构最复杂的一层。它拥有更多的卷积层和神经元，不仅负责最终的人脸判定，还负责输出高精度的 5 个关键点坐标。经过 PNet 和 RNet 的层层筛选，ONet 面临的是最高难度的判别任务，因此其精度至关重要。</p>
+<hr>
+<h2 id="%E4%BA%8Cresnet-%E6%83%85%E7%BB%AA%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9D%97">二、ResNet 情绪识别模块</h2>
+<h3 id="1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-resnet18">1. 为什么选择 ResNet18？</h3>
+<p>针对 FER-2013 数据集（48x48 灰度图），我们选择了 <strong>ResNet18</strong>，原因如下：</p>
+<ol>
+<li><strong>性能优越</strong>：在该数据集上可达到 71%-73% 的准确率，媲美 VGG19 等深层网络。</li>
+<li><strong>轻量高效</strong>：参数量适中，推理速度快，完美适配实时视频流处理。</li>
+<li><strong>抗退化</strong>：残差连接（Shortcut Connection）有效解决了梯度消失问题，模型收敛更快。</li>
+<li><strong>易于适配</strong>：结构简单，易于修改第一层卷积以适配 48x48 的小尺寸输入。</li>
+</ol>
+<h3 id="2-resnet18-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84">2. ResNet18 网络结构</h3>
+<p>为了适配 48x48 输入，我们去掉了原版 ResNet 第一层的 7x7 卷积和池化，改用 3x3 卷积，保留更多空间特征。</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicBlock</span><span class="hljs-params">(nn.Module)</span>:</span>
+    expansion = <span class="hljs-number">1</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, in_channels, out_channels, stride=<span class="hljs-number">1</span>)</span>:</span>
+        super(BasicBlock, self).__init__()
+        <span class="hljs-comment"># ... (基础残差块定义) ...</span>
+        <span class="hljs-comment"># 核心：Shortcut 连接</span>
+        <span class="hljs-keyword">if</span> stride != <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> in_channels != self.expansion * out_channels:
+            self.shortcut = nn.Sequential(
+                nn.Conv2d(in_channels, self.expansion * out_channels, kernel_size=<span class="hljs-number">1</span>, stride=stride, bias=<span class="hljs-literal">False</span>),
+                nn.BatchNorm2d(self.expansion * out_channels)
+            )
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x)</span>:</span>
+        out = F.relu(self.bn1(self.conv1(x)))
+        out = self.bn2(self.conv2(out))
+        out += self.shortcut(x)  <span class="hljs-comment"># 残差相加 F(x) + x</span>
+        out = F.relu(out)
+        <span class="hljs-keyword">return</span> out
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ResNet</span><span class="hljs-params">(nn.Module)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, block, num_blocks, num_classes=<span class="hljs-number">7</span>, in_channels=<span class="hljs-number">1</span>)</span>:</span>
+        super(ResNet, self).__init__()
+        self.in_channels = <span class="hljs-number">64</span>
+        <span class="hljs-comment"># 修改点：适应小尺寸输入的 conv1</span>
+        self.conv1 = nn.Conv2d(in_channels, <span class="hljs-number">64</span>, kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">1</span>, padding=<span class="hljs-number">1</span>, bias=<span class="hljs-literal">False</span>)
+        self.bn1 = nn.BatchNorm2d(<span class="hljs-number">64</span>)
+        <span class="hljs-comment"># ... (Layer 1-4 定义) ...</span>
+        self.fc = nn.Linear(<span class="hljs-number">512</span> * block.expansion, num_classes)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ResNet18</span><span class="hljs-params">(num_classes=<span class="hljs-number">7</span>, in_channels=<span class="hljs-number">1</span>)</span>:</span>
+    <span class="hljs-keyword">return</span> ResNet(BasicBlock, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>], num_classes, in_channels)
+</div></code></pre>
+<hr>
+<h2 id="%E4%B8%89%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84">三、系统整体架构</h2>
+<p>本系统采用串联架构，实现端到端的实时情绪识别。</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    %% 定义节点样式
+    classDef model fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef process fill:#e1f5fe,stroke:#333,stroke-width:2px;
+    classDef decision fill:#fff9c4,stroke:#333,stroke-width:2px;
+    classDef io fill:#e8f5e9,stroke:#333,stroke-width:2px;
+
+    Start((开始)) --> Init["初始化模型 MTCNN & ResNet"]:::process
+    Init --> Input[读取视频帧 / 摄像头]:::io
+    
+    Input --> MTCNN_Detect[MTCNN 人脸侦测]:::model
+    MTCNN_Detect -->|P-Net -> R-Net -> O-Net| Faces{检测到人脸?}:::decision
+    
+    Faces -- 否 --> Display[显示当前帧]:::io
+    Faces -- 是 --> Loop[遍历每一个人脸框]:::decision
+    
+    subgraph "单张人脸处理流水线"
+        Loop --> Coord["坐标越界保护 max/min"]:::process
+        Coord --> Align["人脸对齐 Face Alignment<br>(基于关键点旋转)"]:::process
+        Align --> Crop["裁剪人脸区域 ROI"]:::process
+        
+        Crop --> Preprocess[图像预处理]:::process
+        Preprocess --> Step1["转灰度 Grayscale"]:::process
+        Step1 --> Step2["Resize (48x48)"]:::process
+        Step2 --> Step3["归一化 /255.0"]:::process
+        Step3 --> Step4["转 Tensor & 升维"]:::process
+        
+        Step4 --> ResNet_Infer["ResNet-18 模型推理"]:::model
+        ResNet_Infer --> Result["Softmax -> Argmax<br>获取情绪类别"]:::process
+    end
+    
+    Result --> Draw["绘制绿色人脸框 & 红色关键点"]:::process
+    Draw --> Label[绘制情绪标签文本]:::process
+    
+    Label --> Loop
+    Loop -->|所有脸处理完毕| Display
+    
+    Display --> Exit{是否按 'q' 退出?}:::decision
+    Exit -- 否 --> Input
+    Exit -- 是 --> End((结束))
+</div></code></pre>
+<hr>
+<h2 id="%E5%9B%9B%E7%9B%B8%E5%85%B3%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BA">四、相关截图展示</h2>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/image/pnet_training.png" alt="PNet训练结果" title="PNet训练结果"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/image/rnet_data.png" alt="RNet数据样本" title="RNet数据样本"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/image/rnet_training.png" alt="RNet训练结果" title="RNet训练结果"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/image/onet_training.png" alt="ONet训练结果" title="ONet训练结果"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/result/1.jpg" alt="happy"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/result/2.png" alt="neural"></p>
+<p><img src="https://github.com/Aimyon69/pytorch/raw/master/Design/result/3.jpg" alt="sad"></p>
+
+</body>
+</html>
