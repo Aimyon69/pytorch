@@ -192,7 +192,9 @@ if __name__=='__main__':
     train()
 ```
 训练结果如下：
-!(PNet训练结果)(h)。
+![PNet训练结果](https://github.com/Aimyon69/pytorch/blob/master/Design/image/pnet_training.png)
+
+
 
 
 
